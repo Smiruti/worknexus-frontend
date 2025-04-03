@@ -37,23 +37,30 @@ const UserDetails = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         try {
             await axios.put("http://localhost:8181/user/update-details", null, {
                 params: { id: user.id, name: user.name, mobile: user.mobile },
             });
-
+    
             await axios.put("http://localhost:8181/user/update-role", null, {
                 params: { id: user.id, role: user.role },
             });
-
+    
             alert("User details updated successfully");
-            navigate("/employee-dashboard");
+    
+            // Redirect based on user role
+            if (user.role === "ADMIN") {
+                navigate("/admin-dashboard");
+            } else {
+                navigate("/employee-dashboard");
+            }
         } catch (error) {
             console.error("Error updating user details", error);
             alert("Failed to update user details");
         }
     };
+    
 
     return (
         <div className="container mt-5">
