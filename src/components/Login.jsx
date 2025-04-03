@@ -36,15 +36,16 @@ const Login = () => {
             alert("Please enter the OTP");
             return;
         }
-
+    
         setLoading(true);
         try {
             const response = await axios.post("http://localhost:8181/auth/verify-otp", null, {
                 params: { email, otp },
             });
-
+    
             alert(response.data);
             if (response.data.includes("OTP verified")) {
+                localStorage.setItem("userEmail", email); // Store email in localStorage
                 navigate("/user-details"); // Redirect to UserDetails component
             }
         } catch (error) {
@@ -53,6 +54,7 @@ const Login = () => {
         }
         setLoading(false);
     };
+    
 
     return (
         <div className="container d-flex justify-content-center align-items-center vh-100">

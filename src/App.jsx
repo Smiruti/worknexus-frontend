@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Login from "./components/Login";
 import UserDetails from "./components/UserDetails";
 import "./App.css";
+import EmployeeDashboard from "./components/E-Dashboard";
+import AdminDashboard from "./components/A-Dashboard";
 
 function App() {
   return (
@@ -9,6 +11,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/user-details" element={<UserDetails />} />
+        <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
       </Routes>
     </Router>
   );
