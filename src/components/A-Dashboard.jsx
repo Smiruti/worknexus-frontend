@@ -29,7 +29,7 @@ const AdminDashboard = () => {
                 // Fetch user data
                 const userResponse = await axios.get(`http://localhost:8181/user/find-by-email?email=${email}`);
                 setUserData(userResponse.data);
-                
+
                 if (userResponse.data.role !== "ADMIN") {
                     navigate("/employee-dashboard");
                     return;
@@ -37,7 +37,7 @@ const AdminDashboard = () => {
 
                 // Fetch today's attendance
                 await fetchTodayAttendance(email);
-                
+
                 setIsLoading(false);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -52,12 +52,12 @@ const AdminDashboard = () => {
         try {
             const response = await axios.get(`http://localhost:8181/attendance/view/${email}`);
             const today = new Date().toISOString().split('T')[0];
-            const todayRecord = response.data.find(record => 
+            const todayRecord = response.data.find(record =>
                 record.attendanceDate === today
             );
-            
+
             setTodayAttendance(todayRecord);
-            
+
             if (todayRecord) {
                 if (todayRecord.clockIn && !todayRecord.clockOut) {
                     setAttendanceStatus("PRESENT");
@@ -108,7 +108,7 @@ const AdminDashboard = () => {
     // Clock In
     const clockIn = async () => {
         if (!userEmail) return;
-        
+
         try {
             const response = await axios.post(`http://localhost:8181/attendance/clock-in?email=${userEmail}`);
             setAttendanceStatus("PRESENT");
@@ -123,7 +123,7 @@ const AdminDashboard = () => {
     // Clock Out
     const clockOut = async () => {
         if (!userEmail) return;
-        
+
         try {
             const response = await axios.post(`http://localhost:8181/attendance/clock-out?email=${userEmail}`);
             setAttendanceStatus("COMPLETED");
@@ -195,26 +195,26 @@ const AdminDashboard = () => {
             <div className="container mt-4 text-center">
                 <h1>Welcome {userData.name || "Admin"}</h1>
                 <div className="d-flex justify-content-center mt-3">
-                    <button 
-                        className={`btn me-2 ${activeTab === "attendance" ? "btn-primary" : "btn-outline-primary"}`} 
+                    <button
+                        className={`btn me-2 ${activeTab === "attendance" ? "btn-primary" : "btn-outline-primary"}`}
                         onClick={() => setActiveTab("attendance")}
                     >
                         Attendance
                     </button>
-                    <button 
-                        className={`btn me-2 ${activeTab === "checkin" ? "btn-primary" : "btn-outline-primary"}`} 
+                    <button
+                        className={`btn me-2 ${activeTab === "checkin" ? "btn-primary" : "btn-outline-primary"}`}
                         onClick={() => setActiveTab("checkin")}
                     >
                         Check-In / Check-Out
                     </button>
-                    <button 
-                        className={`btn me-2 ${activeTab === "employees" ? "btn-primary" : "btn-outline-primary"}`} 
+                    <button
+                        className={`btn me-2 ${activeTab === "employees" ? "btn-primary" : "btn-outline-primary"}`}
                         onClick={() => setActiveTab("employees")}
                     >
                         Employees Status
                     </button>
-                    <button 
-                        className={`btn ${activeTab === "leave" ? "btn-primary" : "btn-outline-primary"}`} 
+                    <button
+                        className={`btn ${activeTab === "leave" ? "btn-primary" : "btn-outline-primary"}`}
                         onClick={() => setActiveTab("leave")}
                     >
                         Leave Requests
@@ -227,8 +227,8 @@ const AdminDashboard = () => {
                         <div className="card-body text-center">
                             <h5 className="card-title fw-bold">Attendance</h5>
                             <p>Click here to activate attendance</p>
-                            <button 
-                                className="btn btn-success w-100" 
+                            <button
+                                className="btn btn-success w-100"
                                 onClick={activateAttendance}
                             >
                                 Activate Attendance
@@ -242,15 +242,15 @@ const AdminDashboard = () => {
                     <div className="card mt-4 mx-auto shadow-lg" style={{ maxWidth: "400px" }}>
                         <div className="card-body text-center">
                             <h5 className="card-title fw-bold">Check-In / Check-Out</h5>
-                            <button 
-                                className="btn btn-success w-100 mb-2" 
+                            <button
+                                className="btn btn-success w-100 mb-2"
                                 onClick={clockIn}
                                 disabled={attendanceStatus === "PRESENT" || attendanceStatus === "COMPLETED"}
                             >
                                 Check In
                             </button>
-                            <button 
-                                className="btn btn-danger w-100" 
+                            <button
+                                className="btn btn-danger w-100"
                                 onClick={clockOut}
                                 disabled={!attendanceStatus || attendanceStatus === "COMPLETED"}
                             >
@@ -258,11 +258,10 @@ const AdminDashboard = () => {
                             </button>
                             {attendanceStatus && (
                                 <div className="mt-3">
-                                    <p>Status: 
-                                        <span className={`badge ${
-                                            attendanceStatus === "PRESENT" ? "bg-success" : 
-                                            attendanceStatus === "COMPLETED" ? "bg-primary" : "bg-secondary"
-                                        } ms-2`}>
+                                    <p>Status:
+                                        <span className={`badge ${attendanceStatus === "PRESENT" ? "bg-success" :
+                                                attendanceStatus === "COMPLETED" ? "bg-primary" : "bg-secondary"
+                                            } ms-2`}>
                                             {attendanceStatus}
                                         </span>
                                     </p>
@@ -303,21 +302,20 @@ const AdminDashboard = () => {
                                                     <td>{employee.user?.email || "N/A"}</td>
                                                     <td>{new Date(employee.attendanceDate).toLocaleDateString()}</td>
                                                     <td>
-                                                        <span className={`badge ${
-                                                            employee.status === "PRESENT" ? "bg-success" : 
-                                                            employee.status === "ABSENT" ? "bg-danger" : "bg-warning"
-                                                        }`}>
+                                                        <span className={`badge ${employee.status === "PRESENT" ? "bg-success" :
+                                                                employee.status === "ABSENT" ? "bg-danger" : "bg-warning"
+                                                            }`}>
                                                             {employee.status}
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        {employee.clockIn ? 
-                                                            new Date(employee.clockIn).toLocaleTimeString() : 
+                                                        {employee.clockIn ?
+                                                            new Date(employee.clockIn).toLocaleTimeString() :
                                                             "N/A"}
                                                     </td>
                                                     <td>
-                                                        {employee.clockOut ? 
-                                                            new Date(employee.clockOut).toLocaleTimeString() : 
+                                                        {employee.clockOut ?
+                                                            new Date(employee.clockOut).toLocaleTimeString() :
                                                             "N/A"}
                                                     </td>
                                                 </tr>
@@ -359,10 +357,9 @@ const AdminDashboard = () => {
                                                     <td>{request.user?.email || "N/A"}</td>
                                                     <td>{new Date(request.leaveDate).toLocaleDateString()}</td>
                                                     <td>
-                                                        <span className={`badge ${
-                                                            request.status === "APPROVED" ? "bg-success" : 
-                                                            request.status === "REJECTED" ? "bg-danger" : "bg-warning"
-                                                        }`}>
+                                                        <span className={`badge ${request.status === "APPROVED" ? "bg-success" :
+                                                                request.status === "REJECTED" ? "bg-danger" : "bg-warning"
+                                                            }`}>
                                                             {request.status}
                                                         </span>
                                                     </td>
@@ -370,14 +367,14 @@ const AdminDashboard = () => {
                                                     <td>
                                                         {request.status === "PENDING" ? (
                                                             <>
-                                                                <button 
-                                                                    className="btn btn-success btn-sm me-2" 
+                                                                <button
+                                                                    className="btn btn-success btn-sm me-2"
                                                                     onClick={() => approveLeave(request.id)}
                                                                 >
                                                                     Approve
                                                                 </button>
-                                                                <button 
-                                                                    className="btn btn-danger btn-sm" 
+                                                                <button
+                                                                    className="btn btn-danger btn-sm"
                                                                     onClick={() => rejectLeave(request.id)}
                                                                 >
                                                                     Reject
