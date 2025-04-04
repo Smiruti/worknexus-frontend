@@ -19,7 +19,7 @@ const AdminDashboard = () => {
         const email = localStorage.getItem("userEmail");
         if (!email) {
             alert("No user email found. Please log in again.");
-            navigate("/login");
+            navigate("/");
             return;
         }
         setUserEmail(email);
@@ -41,7 +41,7 @@ const AdminDashboard = () => {
                 setIsLoading(false);
             } catch (error) {
                 console.error("Error fetching data:", error);
-                navigate("/login");
+                navigate("/");
             }
         };
 
