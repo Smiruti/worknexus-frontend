@@ -260,7 +260,7 @@ const AdminDashboard = () => {
                                 <div className="mt-3">
                                     <p>Status:
                                         <span className={`badge ${attendanceStatus === "PRESENT" ? "bg-success" :
-                                                attendanceStatus === "COMPLETED" ? "bg-primary" : "bg-secondary"
+                                            attendanceStatus === "COMPLETED" ? "bg-primary" : "bg-secondary"
                                             } ms-2`}>
                                             {attendanceStatus}
                                         </span>
@@ -303,7 +303,7 @@ const AdminDashboard = () => {
                                                     <td>{new Date(employee.attendanceDate).toLocaleDateString()}</td>
                                                     <td>
                                                         <span className={`badge ${employee.status === "PRESENT" ? "bg-success" :
-                                                                employee.status === "ABSENT" ? "bg-danger" : "bg-warning"
+                                                            employee.status === "ABSENT" ? "bg-danger" : "bg-warning"
                                                             }`}>
                                                             {employee.status}
                                                         </span>
@@ -358,7 +358,7 @@ const AdminDashboard = () => {
                                                     <td>{new Date(request.leaveDate).toLocaleDateString()}</td>
                                                     <td>
                                                         <span className={`badge ${request.status === "APPROVED" ? "bg-success" :
-                                                                request.status === "REJECTED" ? "bg-danger" : "bg-warning"
+                                                            request.status === "REJECTED" ? "bg-danger" : "bg-warning"
                                                             }`}>
                                                             {request.status}
                                                         </span>
