@@ -22,7 +22,7 @@ const EmployeeDashboard = () => {
     const [workDescription, setWorkDescription] = useState("");
     const [workStartTime, setWorkStartTime] = useState("");
     const [workEndTime, setWorkEndTime] = useState("");
-    
+
     // Work History state
     const [workHistory, setWorkHistory] = useState([]);
     const [filterStartDate, setFilterStartDate] = useState("");
@@ -305,6 +305,15 @@ const EmployeeDashboard = () => {
                     >
                         Work History
                     </button>
+                    <button
+                        className={`btn me-2 mb-2 ${activeTab === "logout" ? "btn-primary" : "btn-outline-primary"}`}
+                        onClick={() => {
+                            localStorage.removeItem("userEmail");
+                            navigate("/");
+                        }}
+                    >
+                        Logout
+                    </button>
                 </div>
 
                 {activeTab === "checkin" && (
@@ -460,17 +469,17 @@ const EmployeeDashboard = () => {
                                                 />
                                             </div>
                                             <div className="col-md-6 mb-3 text-start">
-                                            <label className="form-label">Title</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                value={workTitle}
-                                                onChange={(e) => setWorkTitle(e.target.value)}
-                                                required
-                                            />
+                                                <label className="form-label">Title</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    value={workTitle}
+                                                    onChange={(e) => setWorkTitle(e.target.value)}
+                                                    required
+                                                />
+                                            </div>
                                         </div>
-                                        </div>
-                                        
+
                                         <div className="row mb-3">
                                             <div className="col-md-6 text-start">
                                                 <label className="form-label">Start Time</label>

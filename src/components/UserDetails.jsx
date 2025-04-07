@@ -30,7 +30,6 @@ const UserDetails = () => {
             .catch((error) => console.error("Error fetching user data:", error));
     }, []);
 
-
     const handleChange = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
     };
@@ -61,47 +60,50 @@ const UserDetails = () => {
         }
     };
 
-
     return (
-        <div className="container mt-5">
-            <h2>User Details</h2>
-            <form onSubmit={handleSubmit} className="card p-4 shadow-lg" style={{ maxWidth: "500px" }}>
-                <div className="mb-3">
-                    <label className="form-label">Name</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="name"
-                        value={user.name}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Email (Read-only)</label>
-                    <input type="email" className="form-control" value={user.email} disabled />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Mobile</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="mobile"
-                        value={user.mobile}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Role</label>
-                    <select className="form-select" name="role" value={user.role} onChange={handleChange}>
-                        <option value="EMPLOYEE">EMPLOYEE</option>
-                        <option value="ADMIN">ADMIN</option>
-                    </select>
-                </div>
+        <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
+            <div className="w-100" style={{ maxWidth: "500px" }}>
+                <h2 className="text-center mb-4">User Details</h2>
+                <form onSubmit={handleSubmit} className="card p-4 shadow-lg">
+                    <div className="mb-3">
+                        <label className="form-label">Name</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="name"
+                            value={user.name}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Email (Read-only)</label>
+                        <input type="email" className="form-control" value={user.email} disabled />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Mobile</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="mobile"
+                            value={user.mobile}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Role</label>
+                        <select className="form-select" name="role" value={user.role} onChange={handleChange}>
+                            <option value="EMPLOYEE">EMPLOYEE</option>
+                            <option value="ADMIN">ADMIN</option>
+                        </select>
+                    </div>
 
-                <button type="submit" className="btn btn-primary w-100">Update Details</button>
-            </form>
+                    <button type="submit" className="btn btn-primary w-100">
+                        Update Details
+                    </button>
+                </form>
+            </div>
         </div>
     );
 };

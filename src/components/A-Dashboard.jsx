@@ -219,6 +219,15 @@ const AdminDashboard = () => {
                     >
                         Leave Requests
                     </button>
+                    <button
+                        className={`btn ms-2 ${activeTab === "logout" ? "btn-primary" : "btn-outline-primary"}`}
+                        onClick={() => {
+                            localStorage.removeItem("userEmail");
+                            navigate("/");
+                        }}
+                    >
+                        Logout
+                    </button>
                 </div>
 
                 {/* Attendance Card */}
