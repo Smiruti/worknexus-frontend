@@ -15,6 +15,7 @@ const EmployeeDashboard = () => {
     const [leaveDate, setLeaveDate] = useState("");
     const [leaveReason, setLeaveReason] = useState("");
     const [leaveHistory, setLeaveHistory] = useState([]);
+    const [tasks, setTasks] = useState([]);
 
     // Work Sheet state
     const [workDate, setWorkDate] = useState("");
@@ -58,6 +59,9 @@ const EmployeeDashboard = () => {
 
                 // Fetch work history
                 await fetchWorkHistory(email);
+
+                // Fetch assigned tasks
+                await fetchTasks(userResponse.data.id);
 
                 setIsLoading(false);
             } catch (error) {
@@ -114,6 +118,15 @@ const EmployeeDashboard = () => {
         }
     };
 
+    const fetchTasks = async (userId) => {
+        try {
+            const response = await axios.get(`http://localhost:8181/task/employee/${userId}`);
+            setTasks(response.data);
+        } catch (error) {
+            console.error("Error fetching tasks:", error);
+        }
+    };
+
     const fetchFilteredWorkHistory = async () => {
         try {
             const response = await axios.get(`http://localhost:8181/work-history/user/${userEmail}/filter`, {
@@ -153,6 +166,27 @@ const EmployeeDashboard = () => {
         } catch (error) {
             console.error("Error clocking out:", error);
             alert(error.response?.data || "Error clocking out");
+        }
+    };
+
+    const updateTaskStatus = async (taskId, status) => {
+        try {
+            const response = await axios.put(`http://localhost:8181/task/update-status`, null, {
+                params: {
+                    taskId: taskId,
+                    status: status,
+                    userId: userData.id
+                }
+            });
+
+            if (response.data === "Task status updated successfully") {
+                await fetchTasks(userData.id);
+            } else {
+                alert(response.data);
+            }
+        } catch (error) {
+            console.error("Error updating task status:", error);
+            alert(error.response?.data || "Error updating task status");
         }
     };
 
@@ -288,6 +322,12 @@ const EmployeeDashboard = () => {
                         Check-In / Check-Out
                     </button>
                     <button
+                        className={`btn me-2 mb-2 ${activeTab === "tasks" ? "btn-primary" : "btn-outline-primary"}`}
+                        onClick={() => setActiveTab("tasks")}
+                    >
+                        Assigned Tasks
+                    </button>
+                    <button
                         className={`btn me-2 mb-2 ${activeTab === "worksheet" ? "btn-primary" : "btn-outline-primary"}`}
                         onClick={() => setActiveTab("worksheet")}
                     >
@@ -351,6 +391,68 @@ const EmployeeDashboard = () => {
                                     )}
                                 </div>
                             )}
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === "tasks" && (
+                    <div className="mt-4">
+                        <div className="card shadow-lg">
+                            <div className="card-body">
+                                <h5 className="card-title fw-bold text-center mb-4">Assigned Tasks</h5>
+
+                                <div className="table-responsive" style={{ maxHeight: "500px", overflowY: "auto" }}>
+                                    <table className="table table-hover">
+                                        <thead className="table-light sticky-top">
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Assigned By</th>
+                                                <th>Details</th>
+                                                <th>Assigned Date</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {tasks.length > 0 ? (
+                                                tasks.map(task => (
+                                                    <tr key={task.id}>
+                                                        <td>{task.title}</td>
+                                                        <td>{task.assignedBy?.name || 'Admin'}</td>
+                                                        <td className="text-truncate" style={{ maxWidth: "200px" }} title={task.details}>
+                                                            {task.details}
+                                                        </td>
+                                                        <td>{new Date(task.assignedDate).toLocaleDateString()}</td>
+                                                        <td>
+                                                            <span className={`badge ${task.status === "COMPLETED" ? "bg-success" : "bg-warning"
+                                                                }`}>
+                                                                {task.status}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            {task.status === "IN_PROGRESS" && (
+                                                                <button
+                                                                    className="btn btn-sm btn-success"
+                                                                    onClick={() => updateTaskStatus(task.id, "COMPLETED")}
+                                                                >
+                                                                    Mark Complete
+                                                                </button>
+                                                            )}
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan="6" className="text-center py-4">
+                                                        <i className="bi bi-list-task text-muted" style={{ fontSize: "2rem" }}></i>
+                                                        <p className="mt-2">No tasks assigned</p>
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 )}
@@ -534,7 +636,7 @@ const EmployeeDashboard = () => {
                                         <label className="form-label ">Start Date</label>
                                         <input
                                             type="date"
-                                            className="form-control"
+                                            className="form-control shadow-none"
                                             value={filterStartDate}
                                             onChange={(e) => setFilterStartDate(e.target.value)}
                                         />
@@ -543,7 +645,7 @@ const EmployeeDashboard = () => {
                                         <label className="form-label">End Date</label>
                                         <input
                                             type="date"
-                                            className="form-control"
+                                            className="form-control shadow-none"
                                             value={filterEndDate}
                                             onChange={(e) => setFilterEndDate(e.target.value)}
                                         />
