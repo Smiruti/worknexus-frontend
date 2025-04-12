@@ -69,7 +69,7 @@ const UserDetails = () => {
                         <label className="form-label">Name</label>
                         <input
                             type="text"
-                            className="form-control"
+                            className="form-control shadow-none"
                             name="name"
                             value={user.name}
                             onChange={handleChange}
@@ -78,13 +78,13 @@ const UserDetails = () => {
                     </div>
                     <div className="mb-3">
                         <label className="form-label">Email (Read-only)</label>
-                        <input type="email" className="form-control" value={user.email} disabled />
+                        <input type="email" className="form-control shadow-none" value={user.email} disabled />
                     </div>
                     <div className="mb-3">
                         <label className="form-label">Mobile</label>
                         <input
                             type="text"
-                            className="form-control"
+                            className="form-control shadow-none"
                             name="mobile"
                             value={user.mobile}
                             onChange={handleChange}

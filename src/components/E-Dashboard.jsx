@@ -374,7 +374,7 @@ const EmployeeDashboard = () => {
                                                 <label htmlFor="leaveDate" className="form-label">Leave Date</label>
                                                 <input
                                                     type="date"
-                                                    className="form-control"
+                                                    className="form-control shadow-none"
                                                     id="leaveDate"
                                                     value={leaveDate}
                                                     onChange={(e) => setLeaveDate(e.target.value)}
@@ -384,7 +384,7 @@ const EmployeeDashboard = () => {
                                             <div className="mb-3 text-start">
                                                 <label htmlFor="leaveReason" className="form-label">Reason</label>
                                                 <textarea
-                                                    className="form-control"
+                                                    className="form-control shadow-none"
                                                     id="leaveReason"
                                                     rows="3"
                                                     value={leaveReason}
@@ -462,7 +462,7 @@ const EmployeeDashboard = () => {
                                                 <label className="form-label">Date</label>
                                                 <input
                                                     type="date"
-                                                    className="form-control"
+                                                    className="form-control shadow-none"
                                                     value={workDate}
                                                     onChange={(e) => setWorkDate(e.target.value)}
                                                     required
@@ -472,7 +472,7 @@ const EmployeeDashboard = () => {
                                                 <label className="form-label">Title</label>
                                                 <input
                                                     type="text"
-                                                    className="form-control"
+                                                    className="form-control shadow-none"
                                                     value={workTitle}
                                                     onChange={(e) => setWorkTitle(e.target.value)}
                                                     required
@@ -505,7 +505,7 @@ const EmployeeDashboard = () => {
                                         <div className="mb-3 text-start">
                                             <label className="form-label">Description</label>
                                             <textarea
-                                                className="form-control"
+                                                className="form-control shadow-none"
                                                 rows="5"
                                                 value={workDescription}
                                                 onChange={(e) => setWorkDescription(e.target.value)}
@@ -674,7 +674,7 @@ const EmployeeDashboard = () => {
                                                     <label className="form-label">Title</label>
                                                     <input
                                                         type="text"
-                                                        className="form-control"
+                                                        className="form-control shadow-none"
                                                         value={workTitle}
                                                         onChange={(e) => setWorkTitle(e.target.value)}
                                                         required
@@ -705,7 +705,7 @@ const EmployeeDashboard = () => {
                                                 <div className="mb-3">
                                                     <label className="form-label">Description</label>
                                                     <textarea
-                                                        className="form-control"
+                                                        className="form-control shadow-none"
                                                         rows="5"
                                                         value={workDescription}
                                                         onChange={(e) => setWorkDescription(e.target.value)}

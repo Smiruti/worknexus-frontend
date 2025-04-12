@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+// import "../styles/Login.css";
 const Login = () => {
     const [showOtpField, setShowOtpField] = useState(false);
     const [email, setEmail] = useState("");
@@ -64,7 +64,7 @@ const Login = () => {
                     <label className="form-label">Email</label>
                     <input
                         type="email"
-                        className="form-control"
+                        className="form-control shadow-none "
                         placeholder="Enter your email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -81,7 +81,7 @@ const Login = () => {
                             <label className="form-label">Enter OTP</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control shadow-none"
                                 placeholder="Enter OTP"
                                 value={otp}
                                 onChange={(e) => setOtp(e.target.value)}
