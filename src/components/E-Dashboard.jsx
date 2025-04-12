@@ -288,12 +288,6 @@ const EmployeeDashboard = () => {
                         Check-In / Check-Out
                     </button>
                     <button
-                        className={`btn me-2 mb-2 ${activeTab === "leave" ? "btn-primary" : "btn-outline-primary"}`}
-                        onClick={() => setActiveTab("leave")}
-                    >
-                        Leave Request
-                    </button>
-                    <button
                         className={`btn me-2 mb-2 ${activeTab === "worksheet" ? "btn-primary" : "btn-outline-primary"}`}
                         onClick={() => setActiveTab("worksheet")}
                     >
@@ -304,6 +298,12 @@ const EmployeeDashboard = () => {
                         onClick={() => setActiveTab("workhistory")}
                     >
                         Work History
+                    </button>
+                    <button
+                        className={`btn me-2 mb-2 ${activeTab === "leave" ? "btn-primary" : "btn-outline-primary"}`}
+                        onClick={() => setActiveTab("leave")}
+                    >
+                        Leave Request
                     </button>
                     <button
                         className={`btn me-2 mb-2 ${activeTab === "logout" ? "btn-primary" : "btn-outline-primary"}`}
