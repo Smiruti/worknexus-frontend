@@ -93,7 +93,7 @@ const UserDetails = () => {
                     </div>
                     <div className="mb-3">
                         <label className="form-label">Role</label>
-                        <select className="form-select" name="role" value={user.role} onChange={handleChange}>
+                        <select className="form-select shadow-none" name="role" value={user.role} onChange={handleChange}>
                             <option value="EMPLOYEE">EMPLOYEE</option>
                             <option value="ADMIN">ADMIN</option>
                         </select>
