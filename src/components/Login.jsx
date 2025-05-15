@@ -85,9 +85,17 @@ const Login = () => {
                     </div>
                     {/* OTP Section */}
                     {!showOtpField ? (
-                        <button className="btn btn-primary w-100" onClick={handleSendOtp} disabled={loading}>
-                            {loading ? "Sending OTP..." : "Send OTP"}
+                        <button className="btn btn-primary w-100 d-flex justify-content-center align-items-center" onClick={handleSendOtp} disabled={loading}>
+                            {loading ? (
+                                <>
+                                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                    Sending OTP...
+                                </>
+                            ) : (
+                                "Send OTP"
+                            )}
                         </button>
+
                     ) : (
                         <>
                             <div className="mb-3">
@@ -101,9 +109,17 @@ const Login = () => {
                                     required
                                 />
                             </div>
-                            <button className="btn btn-success w-100" onClick={handleVerifyOtp} disabled={loading}>
-                                {loading ? "Verifying..." : "Verify OTP"}
+                            <button className="btn btn-success w-100 d-flex justify-content-center align-items-center" onClick={handleVerifyOtp} disabled={loading}>
+                                {loading ? (
+                                    <>
+                                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                        Verifying...
+                                    </>
+                                ) : (
+                                    "Verify OTP"
+                                )}
                             </button>
+
                         </>
                     )}
                 </div>

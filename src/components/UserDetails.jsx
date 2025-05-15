@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 const UserDetails = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+
     const [user, setUser] = useState({
         id: "",
         name: "",
@@ -36,7 +38,7 @@ const UserDetails = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setLoading(true);
         try {
             await axios.put("http://localhost:8181/user/update-details", null, {
                 params: { id: user.id, name: user.name, mobile: user.mobile },
@@ -57,7 +59,9 @@ const UserDetails = () => {
             console.error("Error updating user details", error);
             alert("Failed to update user details");
         }
+        setLoading(false);
     };
+
 
     return (
         <>
@@ -114,9 +118,21 @@ const UserDetails = () => {
                                 <option value="ADMIN">ADMIN</option>
                             </select>
                         </div>
-                        <button type="submit" className="btn btn-primary w-100">
-                            Update Details
+                        <button
+                            type="submit"
+                            className="btn btn-primary w-100 d-flex justify-content-center align-items-center"
+                            disabled={loading}
+                        >
+                            {loading ? (
+                                <>
+                                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                    Updating...
+                                </>
+                            ) : (
+                                "Update Details"
+                            )}
                         </button>
+
                     </form>
                 </div>
             </div>
