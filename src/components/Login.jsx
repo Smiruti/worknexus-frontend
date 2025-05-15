@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import "../styles/Login.css";
+
 const Login = () => {
     const [showOtpField, setShowOtpField] = useState(false);
     const [email, setEmail] = useState("");
@@ -36,17 +36,17 @@ const Login = () => {
             alert("Please enter the OTP");
             return;
         }
-    
+
         setLoading(true);
         try {
             const response = await axios.post("http://localhost:8181/auth/verify-otp", null, {
                 params: { email, otp },
             });
-    
+
             alert(response.data);
             if (response.data.includes("OTP verified")) {
-                localStorage.setItem("userEmail", email); // Store email in localStorage
-                navigate("/user-details"); // Redirect to UserDetails component
+                localStorage.setItem("userEmail", email);
+                navigate("/user-details");
             }
         } catch (error) {
             alert("Invalid OTP. Please try again.");
@@ -54,47 +54,62 @@ const Login = () => {
         }
         setLoading(false);
     };
-    
 
     return (
-        <div className="container d-flex justify-content-center align-items-center vh-100">
-            <div className="card p-4 shadow-lg" style={{ maxWidth: "400px", width: "100%" }}>
-                <h3 className="text-center mb-4">LOGIN</h3>
-                <div className="mb-3">
-                    <label className="form-label">Email</label>
-                    <input
-                        type="email"
-                        className="form-control shadow-none "
-                        placeholder="Enter your email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
+        <>
+            {/* Navbar */}
+            <nav className="navbar navbar-dark p-3" style={{ backgroundColor: "#004AAD" }}>
+                <div className="container-fluid">
+                    <span className="navbar-brand mb-0 h1 mx-auto">WorkNexus</span>
                 </div>
-                {!showOtpField ? (
-                    <button className="btn btn-primary w-100" onClick={handleSendOtp} disabled={loading}>
-                        {loading ? "Sending OTP..." : "Send OTP"}
-                    </button>
-                ) : (
-                    <>
-                        <div className="mb-3">
-                            <label className="form-label">Enter OTP</label>
-                            <input
-                                type="text"
-                                className="form-control shadow-none"
-                                placeholder="Enter OTP"
-                                value={otp}
-                                onChange={(e) => setOtp(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <button className="btn btn-success w-100" onClick={handleVerifyOtp} disabled={loading}>
-                            {loading ? "Verifying..." : "Verify OTP"}
+            </nav>
+
+            {/* Login Card */}
+            <div
+                className="container d-flex justify-content-center align-items-center"
+                style={{ minHeight: "calc(100vh - 56px)" }} // Adjusting for navbar height (typically ~56px)
+            >
+                <div className="card p-4 shadow-lg" style={{ maxWidth: "400px", width: "100%" }}>
+                    <h3 className="text-center mb-4">LOGIN</h3>
+                    {/* Email input */}
+                    <div className="mb-3">
+                        <label className="form-label">Email</label>
+                        <input
+                            type="email"
+                            className="form-control shadow-none"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    {/* OTP Section */}
+                    {!showOtpField ? (
+                        <button className="btn btn-primary w-100" onClick={handleSendOtp} disabled={loading}>
+                            {loading ? "Sending OTP..." : "Send OTP"}
                         </button>
-                    </>
-                )}
+                    ) : (
+                        <>
+                            <div className="mb-3">
+                                <label className="form-label">Enter OTP</label>
+                                <input
+                                    type="text"
+                                    className="form-control shadow-none"
+                                    placeholder="Enter OTP"
+                                    value={otp}
+                                    onChange={(e) => setOtp(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <button className="btn btn-success w-100" onClick={handleVerifyOtp} disabled={loading}>
+                                {loading ? "Verifying..." : "Verify OTP"}
+                            </button>
+                        </>
+                    )}
+                </div>
             </div>
-        </div>
+
+        </>
     );
 };
 

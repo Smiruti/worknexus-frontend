@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import profilePic from "../assets/profile-pic.jpg";
+import profilePic from "../assets/addWorker.jpg";
 import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
@@ -225,9 +225,10 @@ const AdminDashboard = () => {
         <>
             {/* Navbar */}
             <nav className="navbar navbar-expand-lg navbar-dark px-3" style={{ backgroundColor: "#004AAD" }}>
-                <div className="container-fluid d-flex justify-content-between">
-                    <div className="navbar-brand fw-bold">Admin Dashboard</div>
-                    <div className="d-flex align-items-center">
+                <div className="container-fluid d-flex justify-content-between p-2 row">
+                    <div className="navbar-brand fw-bold col-4">Admin Dashboard</div>
+                    <div className="navbar-brand fw-bold fs-4 col-4 text-center">Worknexus</div>
+                    <div className="d-flex align-items-center col-4 justify-content-end">
                         <p className="text-white mx-2 mb-0">{userData.name || "Admin"}</p>
                         <img
                             src={userData.profilePicUrl || profilePic}
@@ -489,7 +490,7 @@ const AdminDashboard = () => {
                                                     <td>{new Date(task.assignedDate).toLocaleDateString()}</td>
                                                     <td>
                                                         <span className={`badge ${task.status === 'COMPLETED' ? 'bg-success' :
-                                                                task.status === 'IN_PROGRESS' ? 'bg-warning' : 'bg-secondary'
+                                                            task.status === 'IN_PROGRESS' ? 'bg-warning' : 'bg-secondary'
                                                             }`}>
                                                             {task.status}
                                                         </span>
@@ -510,7 +511,7 @@ const AdminDashboard = () => {
 
                 {/* Leave Requests Card */}
                 {activeTab === "leave" && (
-                    <div className="card mt-4 mx-auto shadow-lg" style={{ maxWidth: "1000px" }}>
+                    <div className="card mt-4 mx-auto shadow-lg" style={{ maxWidth: "1200px" }}>
                         <div className="card-body">
                             <h5 className="card-title fw-bold text-center">Leave Requests</h5>
                             <div className="table-responsive">
@@ -520,6 +521,7 @@ const AdminDashboard = () => {
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Leave Date</th>
+                                            <th>Reason</th>
                                             <th>Status</th>
                                             <th>Request Date</th>
                                             <th>Actions</th>
@@ -532,6 +534,22 @@ const AdminDashboard = () => {
                                                     <td>{request.user?.name || "N/A"}</td>
                                                     <td>{request.user?.email || "N/A"}</td>
                                                     <td>{new Date(request.leaveDate).toLocaleDateString()}</td>
+                                                    <td>
+                                                        {request.reason && request.reason.length > 30 ? (
+                                                            <>
+                                                                {request.reason.substring(0, 30)}...
+                                                                <button
+                                                                    className="btn btn-link btn-sm p-0 ms-1"
+                                                                    onClick={() => alert(request.reason)}
+                                                                    title="View full reason"
+                                                                >
+                                                                    <i className="bi bi-eye"></i>
+                                                                </button>
+                                                            </>
+                                                        ) : (
+                                                            request.reason || "N/A"
+                                                        )}
+                                                    </td>
                                                     <td>
                                                         <span className={`badge ${request.status === "APPROVED" ? "bg-success" :
                                                             request.status === "REJECTED" ? "bg-danger" : "bg-warning"
@@ -564,7 +582,7 @@ const AdminDashboard = () => {
                                             ))
                                         ) : (
                                             <tr>
-                                                <td colSpan="6" className="text-center">No leave requests found</td>
+                                                <td colSpan="7" className="text-center">No leave requests found</td>
                                             </tr>
                                         )}
                                     </tbody>

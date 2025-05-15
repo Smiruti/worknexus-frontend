@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import profilePic from "../assets/profile-pic.jpg";
+import profilePic from "../assets/addWorker.jpg";
 import { useNavigate } from "react-router-dom";
 
 const EmployeeDashboard = () => {
@@ -298,9 +298,10 @@ const EmployeeDashboard = () => {
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-dark px-3" style={{ backgroundColor: "#004AAD" }}>
-                <div className="container-fluid d-flex justify-content-between">
-                    <div className="navbar-brand fw-bold">Employee Dashboard</div>
-                    <div className="d-flex align-items-center">
+                <div className="container-fluid d-flex justify-content-between p-2 row">
+                    <div className="navbar-brand fw-bold col-4">Employee Dashboard</div>
+                    <div className="navbar-brand fw-bold fs-4 col-4 text-center">Worknexus</div>
+                    <div className="d-flex align-items-center col-4 justify-content-end">
                         <p className="text-white mx-2 mb-0">{userData.name || "Employee"}</p>
                         <img
                             src={userData.profilePicUrl || profilePic}
@@ -480,20 +481,41 @@ const EmployeeDashboard = () => {
                                                     id="leaveDate"
                                                     value={leaveDate}
                                                     onChange={(e) => setLeaveDate(e.target.value)}
+                                                    min={new Date().toISOString().split('T')[0]} // Prevent selecting past dates
                                                     required
                                                 />
                                             </div>
                                             <div className="mb-3 text-start">
-                                                <label htmlFor="leaveReason" className="form-label">Reason</label>
-                                                <textarea
-                                                    className="form-control shadow-none"
-                                                    id="leaveReason"
-                                                    rows="3"
+                                                <label htmlFor="leaveType" className="form-label">Leave Type</label>
+                                                <select
+                                                    className="form-select shadow-none"
+                                                    id="leaveType"
                                                     value={leaveReason}
                                                     onChange={(e) => setLeaveReason(e.target.value)}
                                                     required
-                                                />
+                                                >
+                                                    <option value="">Select Leave Type</option>
+                                                    <option value="Sick Leave">Sick Leave</option>
+                                                    <option value="Personal Leave">Personal Leave</option>
+                                                    <option value="Vacation">Vacation</option>
+                                                    <option value="Family Emergency">Family Emergency</option>
+                                                    <option value="Other">Other (Please specify)</option>
+                                                </select>
                                             </div>
+                                            {leaveReason === "Other" && (
+                                                <div className="mb-3 text-start">
+                                                    <label htmlFor="customReason" className="form-label">Specify Reason</label>
+                                                    <textarea
+                                                        className="form-control shadow-none"
+                                                        id="customReason"
+                                                        rows="2"
+                                                        value={leaveReason === "Other" ? "" : leaveReason}
+                                                        onChange={(e) => setLeaveReason(e.target.value)}
+                                                        required={leaveReason === "Other"}
+                                                    />
+                                                </div>
+                                            )}
+
                                             <button type="submit" className="btn btn-primary w-100">
                                                 Submit Request
                                             </button>
